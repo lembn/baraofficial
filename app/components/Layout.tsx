@@ -1,7 +1,12 @@
-import {Link} from '@remix-run/react';
+import {Link, useLocation} from '@remix-run/react';
 import {useEffect, useState} from 'react';
 import {Image} from '@shopify/hydrogen-react';
-import {AnimationSequence, useAnimate} from 'framer-motion';
+import {
+  AnimatePresence,
+  AnimationSequence,
+  motion,
+  useAnimate,
+} from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 
 type CollectionInfo = {handle: string; id: string; title: string};
@@ -112,6 +117,22 @@ function Footer({collections}: {collections: CollectionInfo[]}) {
   );
 }
 
+const animations: AnimationSequence = [
+  ['#center-logo', {opacity: [0, 1]}, {duration: 0.4, ease: 'easeInOut'}],
+  [
+    '#center-logo',
+    {opacity: [1, 0]},
+    {delay: 0.6, duration: 1, ease: 'easeInOut'},
+  ],
+  ['#layout-header', {opacity: [0, 1]}, {duration: 0.4, ease: 'easeInOut'}],
+  [
+    '#layout-body',
+    {opacity: [0, 1]},
+    {delay: 0.2, duration: 0.4, ease: 'easeInOut'},
+  ],
+  ['#layout-footer', {opacity: [0, 1]}, {duration: 0.4, ease: 'easeInOut'}],
+];
+
 export function Layout({
   collections,
   children,
@@ -120,62 +141,61 @@ export function Layout({
   children: React.ReactNode;
 }) {
   const [animationRef, animate] = useAnimate();
+  const {pathname} = useLocation();
+  const [isLandingPage, setIsLandingPage] = useState(false);
 
+  useEffect(() => setIsLandingPage(pathname == '/'), [pathname]);
   useEffect(() => {
-    const animations: AnimationSequence = [
-      ['#center-logo', {opacity: [0, 1]}, {duration: 0.4, ease: 'easeInOut'}],
-      [
-        '#center-logo',
-        {opacity: [1, 0]},
-        {delay: 0.6, duration: 1, ease: 'easeInOut'},
-      ],
-      ['#layout-header', {opacity: [0, 1]}, {duration: 0.4, ease: 'easeInOut'}],
-      [
-        '#layout-body',
-        {opacity: [0, 1]},
-        {delay: 0.2, duration: 0.4, ease: 'easeInOut'},
-      ],
-      ['#layout-footer', {opacity: [0, 1]}, {duration: 0.4, ease: 'easeInOut'}],
-    ];
-    animate(animations);
-  });
+    if (isLandingPage) animate(animations);
+  }, [animate, isLandingPage]);
 
   return (
     <div className="flex h-screen w-full py-5 space-x-3">
       <div ref={animationRef} className="flex flex-col w-full">
-        {/* <div
-          id="center-logo"
-          className="w-full h-screen absolute flex flex-col justify-center items-center"
-        >
-          <Image
-            loader={() => '/logo/BARA-logo_alt.png'}
-            aspectRatio="314/95"
-            width={300}
-          />
-          <Typewriter
-            options={{
-              strings: ['Create Your Beginning.'],
-              autoStart: true,
-              delay: 30,
-            }}
-          />
-        </div> */}
+        {isLandingPage && (
+          <div
+            id="center-logo"
+            className="absolute w-full top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col justify-center items-center"
+          >
+            <Image
+              loader={() => '/logo/BARA-logo_alt.png'}
+              aspectRatio="314/95"
+              width={300}
+            />
+            <Typewriter
+              options={{
+                strings: ['Create Your Beginning.'],
+                autoStart: true,
+                delay: 30,
+              }}
+            />
+          </div>
+        )}
 
-        <a
-          id="layout-header"
-          className="flex items-center h-fit cursor-pointer opacity-0"
-          href="/"
-        >
-          <Image
-            loader={() => '/logo/BARA-logo_alt.png'}
-            aspectRatio="314/95"
-            width={200}
-          />
-        </a>
+        <AnimatePresence>
+          {!isLandingPage && (
+            <motion.a
+              id="layout-header"
+              className="flex items-center justify-center h-fit cursor-pointer"
+              href="/"
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+            >
+              <Image
+                loader={() => '/logo/BARA-logo_alt.png'}
+                aspectRatio="314/95"
+                width={200}
+              />
+            </motion.a>
+          )}
+        </AnimatePresence>
 
         <div
           id="layout-body"
-          className="flex overflow-y-auto w-full mt-5 mb-3 px-5 opacity-0"
+          className={`flex flex-col overflow-y-auto w-full h-full mt-5 mb-3 px-5 ${
+            isLandingPage ? 'opacity-0' : ''
+          }`}
         >
           {children}
         </div>

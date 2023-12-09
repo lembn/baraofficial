@@ -85,7 +85,7 @@ export default function ProductHandle() {
             )}
           </div>
           <div
-            className="prose mt-5 text-md"
+            className="prose mt-5 pb-7 text-md"
             dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
           ></div>
         </div>
