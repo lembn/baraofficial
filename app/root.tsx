@@ -1,4 +1,4 @@
-import {type LinksFunction, type LoaderArgs} from '@shopify/remix-oxygen';
+import {LoaderArgs, type LinksFunction} from '@shopify/remix-oxygen';
 import {
   Links,
   Meta,
@@ -6,12 +6,11 @@ import {
   Scripts,
   LiveReload,
   ScrollRestoration,
-  useLoaderData,
   type ShouldRevalidateFunction,
+  useLoaderData,
 } from '@remix-run/react';
-import type {Shop} from '@shopify/hydrogen/storefront-api-types';
 import appStyles from './styles/app.css';
-import {useNonce} from '@shopify/hydrogen';
+import {Seo, useNonce} from '@shopify/hydrogen';
 import {Layout} from './components/Layout';
 
 // This is important to avoid re-fetching root queries on sub-navigations
@@ -45,30 +44,32 @@ export const links: LinksFunction = () => {
       href: 'https://shop.app',
     },
     {rel: 'icon', type: 'image/png', href: '/favicon.png'},
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.googleapis.com/css2?family=Manrope&display=swap',
+    },
   ];
 };
 
 export async function loader({context}: LoaderArgs) {
-  const layout = await context.storefront.query<{shop: Shop}>(LAYOUT_QUERY);
-  return {layout};
+  return await context.storefront.query(COLLECTIONS_QUERY);
 }
 
 export default function App() {
   const nonce = useNonce();
-  const data = useLoaderData<typeof loader>();
-
-  const {name} = data.layout.shop;
+  const {collections} = useLoaderData();
 
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <Seo />
         <Meta />
         <Links />
       </head>
-      <body>
-        <Layout title={name}>
+      <body className="font-manrope bg-black text-white">
+        <Layout collections={collections.nodes}>
           <Outlet />
         </Layout>
         <ScrollRestoration nonce={nonce} />
@@ -79,11 +80,15 @@ export default function App() {
   );
 }
 
-const LAYOUT_QUERY = `#graphql
-  query layout {
-    shop {
-      name
-      description
+// TODO: update to include all collection
+const COLLECTIONS_QUERY = `#graphql
+  query FeaturedCollections {
+    collections(first: 3, query: "collection_type:smart") {
+      nodes {
+        id
+        title
+        handle
+      }
     }
   }
 `;
