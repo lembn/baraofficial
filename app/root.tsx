@@ -82,8 +82,8 @@ export default function App() {
 
 // TODO: update to include all collection
 const COLLECTIONS_QUERY = `#graphql
-  query FeaturedCollections {
-    collections(first: 3, query: "collection_type:smart") {
+  query {
+    collections(first: 7, query: "collection_type:smart") {
       nodes {
         id
         title
