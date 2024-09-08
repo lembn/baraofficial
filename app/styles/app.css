@@ -19,3 +19,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(173, 173, 173);
 }
+
+ul {
+  list-style: disc;
+  padding-left: 1em;
+}

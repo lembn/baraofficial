@@ -28,7 +28,7 @@ const CollectionSelection = ({
         key={collection.id}
         onClick={() => onSelection(collection.id)}
       >
-        {collection.title}
+        '{collection.title}'
       </Link>
     );
   });

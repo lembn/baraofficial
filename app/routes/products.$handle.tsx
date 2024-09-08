@@ -58,6 +58,7 @@ export default function ProductHandle() {
             />
           </div>
         </div>
+
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
           <div className="grid gap-2">
             <h1 className="text-4xl font-bold leading-10 whitespace-normal">
@@ -67,10 +68,12 @@ export default function ProductHandle() {
               {product.vendor}
             </span>
           </div>
-          <ProductOptions
-            options={product.options}
-            selectedVariant={selectedVariant}
-          />
+          {product.options.length > 1 && (
+            <ProductOptions
+              options={product.options}
+              selectedVariant={selectedVariant}
+            />
+          )}
           <div className="w-full flex flex-col justify-center items-center border-y py-6 border-gray-200">
             <Money
               withoutTrailingZeros
@@ -85,9 +88,9 @@ export default function ProductHandle() {
             )}
           </div>
           <div
-            className="prose mt-5 pb-7 text-md"
+            className="mt-5 pb-7 flex flex-col gap-4 list-disc"
             dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
-          ></div>
+          />
         </div>
       </div>
     </div>
