@@ -2,6 +2,7 @@ import {useLoaderData} from '@remix-run/react';
 import {SeoHandleFunction} from '@shopify/hydrogen';
 import {Image, Money, ShopPayButton} from '@shopify/hydrogen-react';
 import {LoaderArgs, json} from '@shopify/remix-oxygen';
+import ProductImageCarousel from '~/components/ProductImageCarousel';
 import ProductOptions from '~/components/ProductOptions';
 
 export async function loader({params, context, request}: LoaderArgs) {
@@ -48,50 +49,47 @@ export default function ProductHandle() {
   const {shop, product, selectedVariant} = useLoaderData();
 
   return (
-    <div className="w-full gap-4 grid px-6 md:px-8 lg:px-12">
-      <div className="grid items-start gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
-        <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden md:grid-cols-2 md:w-full lg:col-span-2">
-          <div className="md:col-span-2 snap-center card-image aspect-square md:w-full w-[80vw] shadow rounded">
-            <Image
-              className={`w-full h-full aspect-square object-cover`}
-              data={product.selectedVariant?.image || product.featuredImage}
-            />
-          </div>
-        </div>
+    <div className="flex flex-col lg:flex-row gap-8 h-full px-6 ">
+      <div>
+        <ProductImageCarousel>
+          {product.images.nodes.map((image: any) => (
+            <Image key={image.id} className="embla__slide" data={image} />
+          ))}
+        </ProductImageCarousel>
+      </div>
 
-        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
-          <div className="grid gap-2">
-            <h1 className="text-4xl font-bold leading-10 whitespace-normal">
-              {product.title}
-            </h1>
-            <span className="max-w-prose whitespace-pre-wrap inherit text-copy opacity-50 font-medium">
-              {product.vendor}
-            </span>
-          </div>
-          {product.options.length > 1 && (
-            <ProductOptions
-              options={product.options}
-              selectedVariant={selectedVariant}
+      <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
+        <div className="grid gap-2">
+          <h1 className="text-4xl font-bold leading-10 whitespace-normal">
+            {product.title}
+          </h1>
+          <span className="max-w-prose whitespace-pre-wrap inherit text-copy opacity-50 font-medium">
+            {product.vendor}
+          </span>
+        </div>
+        {product.options.length > 1 && (
+          <ProductOptions
+            options={product.options}
+            selectedVariant={selectedVariant}
+          />
+        )}
+        <div className="w-full flex flex-col justify-center items-center border-y py-6 border-gray-200">
+          <Money
+            withoutTrailingZeros
+            data={selectedVariant.price}
+            className="text-xl font-semibold mb-2"
+          />
+          {selectedVariant.availableForSale && (
+            <ShopPayButton
+              storeDomain={shop.primaryDomain.url}
+              variantIds={[selectedVariant?.id]}
             />
           )}
-          <div className="w-full flex flex-col justify-center items-center border-y py-6 border-gray-200">
-            <Money
-              withoutTrailingZeros
-              data={selectedVariant.price}
-              className="text-xl font-semibold mb-2"
-            />
-            {selectedVariant.availableForSale && (
-              <ShopPayButton
-                storeDomain={shop.primaryDomain.url}
-                variantIds={[selectedVariant?.id]}
-              />
-            )}
-          </div>
-          <div
-            className="mt-5 pb-7 flex flex-col gap-4 list-disc"
-            dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
-          />
         </div>
+        <div
+          className="mt-5 pb-7 flex flex-col gap-4 list-disc"
+          dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
+        />
       </div>
     </div>
   );
@@ -111,6 +109,15 @@ const PRODUCT_QUERY = `#graphql
       vendor
       description
       descriptionHtml
+      images(first: 10) {
+        nodes {
+          id
+          url
+          altText
+          width
+          height
+        }
+      }
       featuredImage {
         id
         url
