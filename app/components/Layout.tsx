@@ -134,8 +134,8 @@ export function Layout({
   }, [animate, isLandingPage]);
 
   return (
-    <div className="flex h-screen w-full py-5 space-x-3">
-      <div ref={animationRef} className="flex flex-col w-full">
+    <div className="flex h-[calc(100dvh)] w-full py-5 space-x-3">
+      <div ref={animationRef} className="flex flex-col w-full h-full">
         {isLandingPage && (
           <div
             id="center-logo"
