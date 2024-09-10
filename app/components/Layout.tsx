@@ -108,7 +108,6 @@ const animations: AnimationSequence = [
     {opacity: [1, 0]},
     {delay: 0.6, duration: 1, ease: 'easeInOut'},
   ],
-  ['#layout-header', {opacity: [0, 1]}, {duration: 0.4, ease: 'easeInOut'}],
   [
     '#layout-body',
     {opacity: [0, 1]},
@@ -137,7 +136,7 @@ export function Layout({
     <div className="flex h-[calc(100dvh)] w-full py-5 space-x-3">
       <div ref={animationRef} className="flex flex-col w-full h-full">
         {isLandingPage && (
-          <div
+          <motion.div
             id="center-logo"
             className="absolute w-full top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col justify-center items-center"
           >
@@ -153,13 +152,12 @@ export function Layout({
                 delay: 30,
               }}
             />
-          </div>
+          </motion.div>
         )}
 
         <AnimatePresence>
           {!isLandingPage && (
             <motion.a
-              id="layout-header"
               className="flex items-center justify-center h-fit cursor-pointer"
               href="/"
               initial={{opacity: 0}}
@@ -175,18 +173,18 @@ export function Layout({
           )}
         </AnimatePresence>
 
-        <div
+        <motion.div
           id="layout-body"
           className={`flex flex-col overflow-y-auto w-full h-full mt-5 mb-3 px-5 ${
             isLandingPage ? 'opacity-0' : ''
           }`}
         >
           {children}
-        </div>
+        </motion.div>
 
-        <div id="layout-footer">
+        <motion.div id="layout-footer">
           <Footer collections={collections} />
-        </div>
+        </motion.div>
       </div>
     </div>
   );
