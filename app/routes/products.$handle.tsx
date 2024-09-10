@@ -67,7 +67,7 @@ export default function ProductHandle() {
             {product.vendor}
           </span>
         </div>
-        {product.options.length > 1 && (
+        {product.options && (
           <ProductOptions
             options={product.options}
             selectedVariant={selectedVariant}
