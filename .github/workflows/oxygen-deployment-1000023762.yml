@@ -38,5 +38,4 @@ jobs:
       - name: Build and Publish to Oxygen
         run: npx shopify hydrogen deploy
         env:
-          CI: true
           SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN }}
