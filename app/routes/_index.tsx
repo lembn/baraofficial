@@ -17,7 +17,13 @@ export function meta() {
 export default function Index() {
   return (
     <div className="flex flex-col w-full h-full justify-center items-center relative">
-      <video autoPlay muted loop className="h-full w-full object-cover">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="h-full w-full object-cover"
+      >
         <source
           src="https://cdn.shopify.com/videos/c/o/v/bfd852eba3f84a2ba6cba6346c8ef945.mp4"
           type="video/mp4"

@@ -1,7 +1,7 @@
 import {Image} from '@shopify/hydrogen-react';
 
 const Video = ({src, muted = true}: {src: string; muted?: boolean}) => (
-  <video autoPlay muted={muted} loop className="h-full">
+  <video playsInline autoPlay muted={muted} loop className="h-full">
     <source src={src} type="video/mp4" />
     <Image
       loader={() => '/logo/BARA-logo_alt.png'}
