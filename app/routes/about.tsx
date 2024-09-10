@@ -17,7 +17,7 @@ export default function Index() {
       <Video src="https://cdn.shopify.com/videos/c/o/v/1a9edbea6d1f433b8fc467055a91d47c.mov" />
       <Video
         src="https://cdn.shopify.com/videos/c/o/v/3753179bb19b4cb4830cd0de71120df6.mp4"
-        muted={false}
+        muted={undefined}
       />
       <Video src="https://cdn.shopify.com/videos/c/o/v/1a9edbea6d1f433b8fc467055a91d47c.mov" />
     </div>
