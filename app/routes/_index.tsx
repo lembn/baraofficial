@@ -25,7 +25,7 @@ export default function Index() {
         className="h-full w-full object-cover"
       >
         <source
-          src="https://cdn.shopify.com/videos/c/o/v/bfd852eba3f84a2ba6cba6346c8ef945.mp4"
+          src="https://cdn.shopify.com/videos/c/o/v/0ae23fd557b848d2b1698225a0758a97.mp4"
           type="video/mp4"
         />
         <Image

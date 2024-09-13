@@ -32,7 +32,7 @@ export default function Collection() {
     <>
       <div className="w-full py-8">
         <h1 className="text-4xl font-bold">{collection.title}</h1>
-        <div className="flex items-baseline justify-between w-full">
+        <div className="italic flex text-xs md:text-lg items-baseline justify-between w-full text-stone-5 00">
           {collection.description}
         </div>
       </div>
