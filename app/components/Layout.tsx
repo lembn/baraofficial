@@ -140,7 +140,7 @@ export function Layout({
         {isLandingPage && (
           <motion.div
             id="center-logo"
-            className="absolute w-full top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col justify-center items-center"
+            className="absolute w-full top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col justify-center items-center gap-4 text-xl"
           >
             <Image
               loader={() => '/logo/BARA-logo_alt.png'}
@@ -149,7 +149,7 @@ export function Layout({
             />
             <Typewriter
               options={{
-                strings: ['Create Your Beginning.'],
+                strings: ['CREATE YOUR BEGINNING...'],
                 autoStart: true,
                 delay: 30,
               }}
