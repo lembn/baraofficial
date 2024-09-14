@@ -8,7 +8,7 @@ export default function Index() {
         autoPlay
         muted={undefined}
         loop
-        className="h-full w-full object-cover"
+        className="h-full w-full lg:w-2/3 object-cover"
       >
         <source
           src="https://cdn.shopify.com/videos/c/o/v/1ab2dca02a9845419e0289457301e389.mov"
