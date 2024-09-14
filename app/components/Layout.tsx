@@ -10,28 +10,27 @@ import {
 import Typewriter from 'typewriter-effect';
 
 type CollectionInfo = {handle: string; id: string; title: string};
-
 type Selection = 'collection' | 'socials' | undefined;
 
-const CollectionSelection = ({
-  collections,
-  onSelection,
-}: {
-  collections: CollectionInfo[];
-  onSelection: (id: string) => void;
-}) =>
-  collections.map((collection: CollectionInfo) => {
-    return (
-      <Link
-        className="hover:underline"
-        to={`/collections/${collection.handle}`}
-        key={collection.id}
-        onClick={() => onSelection(collection.id)}
-      >
-        '{collection.title}'
-      </Link>
-    );
-  });
+// const CollectionSelection = ({
+//   collections,
+//   onSelection,
+// }: {
+//   collections: CollectionInfo[];
+//   onSelection: (id: string) => void;
+// }) =>
+//   collections.map((collection: CollectionInfo) => {
+//     return (
+//       <Link
+//         className="hover:underline"
+//         to={`/collections/${collection.handle}`}
+//         key={collection.id}
+//         onClick={() => onSelection(collection.id)}
+//       >
+//         '{collection.title}'
+//       </Link>
+//     );
+//   });
 
 const SolcialsSelection = () => [
   <a
@@ -60,12 +59,12 @@ function Footer({collections}: {collections: CollectionInfo[]}) {
   useEffect(() => {
     switch (selection) {
       case 'collection':
-        setSelectionContent(
-          <CollectionSelection
-            collections={collections}
-            onSelection={() => _setSelection(undefined)}
-          />,
-        );
+        // setSelectionContent(
+        //   <CollectionSelection
+        //     collections={collections}
+        //     onSelection={() => _setSelection(undefined)}
+        //   />,
+        // );
         break;
       case 'socials':
         setSelectionContent(<SolcialsSelection />);
@@ -81,12 +80,15 @@ function Footer({collections}: {collections: CollectionInfo[]}) {
       <ul className="flex space-x-5 justify-center">{selectionContent}</ul>
 
       <div className="flex justify-center gap-5">
-        <button
+        {/* <button
           className="hover:underline"
           onClick={() => setSelection('collection')}
         >
-          COLLECTION
-        </button>
+          COLLECTIONS
+        </button> */}
+        <a className="hover:underline" href="/collections/day-one">
+          COLLECTIONS
+        </a>
         <a className="hover:underline" href="/about">
           ABOUT US
         </a>
