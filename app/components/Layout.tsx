@@ -85,7 +85,7 @@ function Footer({collections}: {collections: CollectionInfo[]}) {
           className="hover:underline"
           onClick={() => setSelection('collection')}
         >
-          COLLECTIONS
+          COLLECTION
         </button>
         <a className="hover:underline" href="/about">
           ABOUT US

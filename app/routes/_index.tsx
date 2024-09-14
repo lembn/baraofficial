@@ -22,7 +22,7 @@ export default function Index() {
         muted
         loop
         playsInline
-        className="h-full w-full object-cover"
+        className="h-full w-full lg:w-2/3 object-cover"
       >
         <source
           src="https://cdn.shopify.com/videos/c/o/v/0ae23fd557b848d2b1698225a0758a97.mp4"
