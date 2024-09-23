@@ -149,7 +149,7 @@ export function Layout({
             />
             <Typewriter
               options={{
-                strings: ['CREATE YOUR BEGINNING...'],
+                strings: ['CREATE YOUR BEGINNING.'],
                 autoStart: true,
                 delay: 30,
               }}

@@ -9,7 +9,7 @@ export function meta() {
     },
     {
       name: 'description',
-      content: 'CREATE YOUR BEGINNING...',
+      content: 'CREATE YOUR BEGINNING.',
     },
   ];
 }
