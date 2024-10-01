@@ -17,16 +17,19 @@ export async function action({
   let result;
   switch (action) {
     case CartForm.ACTIONS.LinesAdd:
-      const lines = [];
+      let lines = [];
       const cartContent = await cart.get();
-      if (!cartContent) throw 'failed to load cart';
-      const cartLines = cartContent.lines.edges.map(
-        (e) => e.node.merchandise.id,
-      );
+      if (cartContent) {
+        const cartLines = cartContent.lines.edges.map(
+          (e) => e.node.merchandise.id,
+        );
 
-      for (const line of inputs.lines) {
-        if (!cartLines.includes(line.merchandiseId)) lines.push(line);
-        else console.log('dupe');
+        for (const line of inputs.lines) {
+          if (!cartLines.includes(line.merchandiseId)) lines.push(line);
+          else console.log('dupe');
+        }
+      } else {
+        lines = inputs.lines;
       }
 
       result = await cart.addLines(lines);

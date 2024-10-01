@@ -5,8 +5,8 @@ export default function AddToCartButton({
   merchandiseId,
   onClick,
 }: {
-  children: JSX.Element;
   merchandiseId: string;
+  children?: JSX.Element;
   onClick?: () => void;
 }) {
   return (
@@ -18,7 +18,7 @@ export default function AddToCartButton({
       >
         <button
           onClick={onClick}
-          className="flex justify-between items-center w-full border border-transparent bg-white px-6 py-3 text-black font-medium shadow-sm hover:bg-black hover:border-2 hover:border-white hover:text-white"
+          className="flex justify-center w-full border border-transparent bg-white px-6 py-3 text-black font-medium shadow-sm hover:bg-black hover:border-2 hover:border-white hover:text-white"
         >
           <p>ADD TO CART</p>
           <p>{children}</p>

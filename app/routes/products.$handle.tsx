@@ -59,7 +59,7 @@ export default function ProductHandle() {
         </ProductImageCarousel>
       </div>
 
-      <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-6  p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] w-full">
+      <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-6  p-0 md:p-6 md:px-0 w-full">
         <div>
           <h1 className="text-4xl font-bold leading-10 whitespace-normal">
             {product.title}
@@ -75,13 +75,16 @@ export default function ProductHandle() {
           />
         )}
         {selectedVariant.availableForSale && (
-          <AddToCartButton merchandiseId={selectedVariant?.id}>
+          <div className="flex flex-col items-center gap-2">
             <Money
               withoutTrailingZeros
               data={selectedVariant.price}
               className="text-xl font-semibold"
             />
-          </AddToCartButton>
+            <AddToCartButton
+              merchandiseId={selectedVariant?.id}
+            ></AddToCartButton>
+          </div>
         )}
         <div
           className="pb-7 flex flex-col gap-4 list-disc"
