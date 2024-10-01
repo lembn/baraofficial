@@ -1,4 +1,4 @@
-import {LoaderArgs, type LinksFunction} from '@shopify/remix-oxygen';
+import {defer, LoaderArgs, type LinksFunction} from '@shopify/remix-oxygen';
 import {
   Links,
   Meta,
@@ -12,6 +12,7 @@ import {
 import appStyles from './styles/app.css';
 import {Seo, useNonce} from '@shopify/hydrogen';
 import {Layout} from './components/Layout';
+import {ShopifyProvider, CartProvider} from '@shopify/hydrogen-react';
 
 // This is important to avoid re-fetching root queries on sub-navigations
 export const shouldRevalidate: ShouldRevalidateFunction = ({
@@ -52,7 +53,13 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader({context}: LoaderArgs) {
-  return await context.storefront.query(COLLECTIONS_QUERY);
+  const {cart} = context;
+  const {collections} = await context.storefront.query(COLLECTIONS_QUERY);
+
+  return defer({
+    cart: cart.get(),
+    collections,
+  });
 }
 
 export default function App() {
@@ -60,23 +67,37 @@ export default function App() {
   const {collections} = useLoaderData();
 
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <Seo />
-        <Meta />
-        <Links />
-      </head>
-      <body className="font-manrope bg-black text-white">
-        <Layout collections={collections.nodes}>
-          <Outlet />
-        </Layout>
-        <ScrollRestoration nonce={nonce} />
-        <Scripts nonce={nonce} />
-        <LiveReload nonce={nonce} />
-      </body>
-    </html>
+    <ShopifyProvider
+      storeDomain="a525e1-80.myshopify.com"
+      storefrontToken="da03d3b983b6b58b58cda6fdd13d2cc7"
+      storefrontApiVersion="2023-07"
+      countryIsoCode="GB"
+      languageIsoCode="EN"
+    >
+      <CartProvider>
+        <html lang="en">
+          <head>
+            <meta charSet="utf-8" />
+            <meta
+              name="viewport"
+              content="width=device-width,initial-scale=1"
+            />
+            <Seo />
+            <Meta />
+            <Links />
+          </head>
+          <body className="font-manrope bg-black text-white">
+            <Layout collections={collections.nodes}>
+              <Outlet />
+            </Layout>
+
+            <ScrollRestoration nonce={nonce} />
+            <Scripts nonce={nonce} />
+            <LiveReload nonce={nonce} />
+          </body>
+        </html>
+      </CartProvider>
+    </ShopifyProvider>
   );
 }
 

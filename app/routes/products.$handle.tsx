@@ -1,7 +1,8 @@
 import {useLoaderData} from '@remix-run/react';
 import {SeoHandleFunction} from '@shopify/hydrogen';
-import {Image, Money, ShopPayButton} from '@shopify/hydrogen-react';
+import {Image, Money} from '@shopify/hydrogen-react';
 import {LoaderArgs, json} from '@shopify/remix-oxygen';
+import AddToCartButton from '~/components/BuyNowButton';
 import ProductImageCarousel from '~/components/ProductImageCarousel';
 import ProductOptions from '~/components/ProductOptions';
 
@@ -46,10 +47,10 @@ export const handle = {
 };
 
 export default function ProductHandle() {
-  const {shop, product, selectedVariant} = useLoaderData();
+  const {product, selectedVariant} = useLoaderData();
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 h-full px-6 ">
+    <div className="flex flex-col lg:flex-row gap-8 h-full px-6 w-full ">
       <div>
         <ProductImageCarousel>
           {product.images.nodes.map((image: any) => (
@@ -58,8 +59,8 @@ export default function ProductHandle() {
         </ProductImageCarousel>
       </div>
 
-      <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
-        <div className="grid gap-2">
+      <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-6  p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] w-full">
+        <div>
           <h1 className="text-4xl font-bold leading-10 whitespace-normal">
             {product.title}
           </h1>
@@ -73,21 +74,17 @@ export default function ProductHandle() {
             selectedVariant={selectedVariant}
           />
         )}
-        <div className="w-full flex flex-col justify-center items-center border-y py-6 border-gray-200">
-          <Money
-            withoutTrailingZeros
-            data={selectedVariant.price}
-            className="text-xl font-semibold mb-2"
-          />
-          {selectedVariant.availableForSale && (
-            <ShopPayButton
-              storeDomain={shop.primaryDomain.url}
-              variantIds={[selectedVariant?.id]}
+        {selectedVariant.availableForSale && (
+          <AddToCartButton merchandiseId={selectedVariant?.id}>
+            <Money
+              withoutTrailingZeros
+              data={selectedVariant.price}
+              className="text-xl font-semibold"
             />
-          )}
-        </div>
+          </AddToCartButton>
+        )}
         <div
-          className="mt-5 pb-7 flex flex-col gap-4 list-disc"
+          className="pb-7 flex flex-col gap-4 list-disc"
           dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
         />
       </div>

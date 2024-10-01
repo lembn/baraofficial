@@ -39,7 +39,7 @@ export default function ProductOptions({
     : paramsWithDefaults;
 
   return (
-    <div className="grid gap-4 mb-6">
+    <div className="grid gap-4">
       {options.map((option) => {
         if (!option.values.length) {
           return;

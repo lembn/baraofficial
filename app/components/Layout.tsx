@@ -8,6 +8,7 @@ import {
   useAnimate,
 } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
+import Cart from './Cart';
 
 type CollectionInfo = {handle: string; id: string; title: string};
 type Selection = 'collection' | 'socials' | undefined;
@@ -52,6 +53,7 @@ const SolcialsSelection = () => [
 function Footer({collections}: {collections: CollectionInfo[]}) {
   const [selection, _setSelection] = useState<Selection>(undefined);
   const [selectionContent, setSelectionContent] = useState(<></>);
+  const [cartOpen, setCartOpen] = useState(false);
 
   const setSelection = (s: Selection) =>
     _setSelection(selection ? undefined : s);
@@ -97,6 +99,9 @@ function Footer({collections}: {collections: CollectionInfo[]}) {
           onClick={() => setSelection('socials')}
         >
           SOCIALS
+        </button>
+        <button className="hover:underline" onClick={() => setCartOpen(true)}>
+          <Cart open={cartOpen} setOpen={setCartOpen} />
         </button>
       </div>
     </div>
