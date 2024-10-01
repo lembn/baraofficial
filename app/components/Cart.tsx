@@ -51,55 +51,57 @@ export default function Cart({
                           </button>
                         </div>
 
-                        <div className="mt-8">
-                          <ul
-                            role="list"
-                            className="-my-6 divide-y divide-white"
-                          >
-                            {cart.lines.edges
-                              .map((e: any) => ({
-                                lineId: e.node.id,
-                                ...e.node.merchandise,
-                              }))
-                              .map((product: any) => (
-                                <li key={product.id} className="flex py-6">
-                                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden">
-                                    <img
-                                      src={product.image.url}
-                                      className="h-full w-full object-cover object-center"
-                                    />
-                                  </div>
-
-                                  <div className="w-full px-4">
-                                    <div className="flex justify-between w-full   ">
-                                      <p>{product.product.title}</p>
-                                      <p>£{product.price.amount}</p>
+                        {cart.lines && (
+                          <div className="mt-8">
+                            <ul
+                              role="list"
+                              className="-my-6 divide-y divide-white"
+                            >
+                              {cart.lines.edges
+                                .map((e: any) => ({
+                                  lineId: e.node.id,
+                                  ...e.node.merchandise,
+                                }))
+                                .map((product: any) => (
+                                  <li key={product.id} className="flex py-6">
+                                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden">
+                                      <img
+                                        src={product.image.url}
+                                        className="h-full w-full object-cover object-center"
+                                      />
                                     </div>
-                                    {product.selectedOptions.length > 0 && (
-                                      <p className="mt-1 text-sm text-gray-500">
-                                        {product.selectedOptions
-                                          .map((o: any) => o.value)
-                                          .join(', ')}
-                                      </p>
-                                    )}
 
-                                    <CartForm
-                                      route="/cart"
-                                      action={CartForm.ACTIONS.LinesRemove}
-                                      inputs={{lineIds: [product.lineId]}}
-                                    >
-                                      <button className="mt-2 font-medium text-white hover:text-gray-500">
-                                        Remove
-                                      </button>
-                                    </CartForm>
-                                  </div>
-                                </li>
-                              ))}
-                          </ul>
-                        </div>
+                                    <div className="w-full px-4">
+                                      <div className="flex justify-between w-full   ">
+                                        <p>{product.product.title}</p>
+                                        <p>£{product.price.amount}</p>
+                                      </div>
+                                      {product.selectedOptions.length > 0 && (
+                                        <p className="mt-1 text-sm text-gray-500">
+                                          {product.selectedOptions
+                                            .map((o: any) => o.value)
+                                            .join(', ')}
+                                        </p>
+                                      )}
+
+                                      <CartForm
+                                        route="/cart"
+                                        action={CartForm.ACTIONS.LinesRemove}
+                                        inputs={{lineIds: [product.lineId]}}
+                                      >
+                                        <button className="mt-2 font-medium text-white hover:text-gray-500">
+                                          Remove
+                                        </button>
+                                      </CartForm>
+                                    </div>
+                                  </li>
+                                ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
 
-                      {cart.lines.edges.length > 0 ? (
+                      {cart.lines && cart.lines.edges.length > 0 ? (
                         <a
                           href={cart.checkoutUrl}
                           className="flex m-6 items-center justify-center border border-transparent bg-white px-6 py-3 text-black font-medium shadow-sm hover:bg-black hover:border-2 hover:border-white hover:text-white"
