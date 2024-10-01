@@ -4,6 +4,7 @@ export default function Index() {
       <video
         playsInline
         autoPlay
+        muted
         loop
         className="h-full w-full lg:w-2/3 object-cover"
       >
