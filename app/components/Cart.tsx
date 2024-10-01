@@ -51,7 +51,7 @@ export default function Cart({
                           </button>
                         </div>
 
-                        {cart.lines && (
+                        {cart && (
                           <div className="mt-8">
                             <ul
                               role="list"
@@ -101,7 +101,7 @@ export default function Cart({
                         )}
                       </div>
 
-                      {cart.lines && cart.lines.edges.length > 0 ? (
+                      {cart && cart.lines.edges.length > 0 ? (
                         <a
                           href={cart.checkoutUrl}
                           className="flex m-6 items-center justify-center border border-transparent bg-white px-6 py-3 text-black font-medium shadow-sm hover:bg-black hover:border-2 hover:border-white hover:text-white"
